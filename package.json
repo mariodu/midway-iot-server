@@ -1,0 +1,28 @@
+{
+  "name": "midway-iot-server",
+  "version": "1.0.0",
+  "description": "midway iot server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariodu/midway-iot-server.git"
+  },
+  "keywords": [
+    "midway",
+    "iot"
+  ],
+  "author": "mariodu - <dujiakun@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mariodu/midway-iot-server/issues"
+  },
+  "homepage": "https://github.com/mariodu/midway-iot-server#readme",
+  "dependencies": {
+    "ioredis": "^3.1.1",
+    "koa": "^2.3.0",
+    "mosca": "^2.5.1"
+  }
+}
