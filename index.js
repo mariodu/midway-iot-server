@@ -6,7 +6,12 @@ const server = new MqttServer();
 
 server.ready(() => {
   server.on('published', (message, client) => {
-    console.log(message);
+    try {
+      const data = JSON.parse(message);
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
   });
   app.use(ctx => {
     const query = ctx.query;
