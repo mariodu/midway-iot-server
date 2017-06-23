@@ -23,7 +23,7 @@ class Server extends Base {
     super(options);
     const server = new mosca.Server(moscaSettings);
     const clients = new Map();
-    server.on('ready', function ready() {
+    server.on('ready', () => {
       console.log('Mosca server is up and running');
       this.ready(true);
     });
