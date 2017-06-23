@@ -13,8 +13,10 @@ server.ready(() => {
       action,
       target,
     });
-    this.body = query;
+    ctx.body = query;
   });
-
-  app.listen(3000);
+  const port = 3000;
+  app.listen(port, () => {
+    consoel.log(`app is listening on ${port}`);
+  });
 });
