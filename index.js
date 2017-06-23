@@ -5,6 +5,9 @@ const MqttServer = require('./mqtt-server');
 const server = new MqttServer();
 
 server.ready(() => {
+  server.on('published', (message, client) => {
+    console.log(message);
+  });
   app.use(ctx => {
     const query = ctx.query;
     const action = query.action;
@@ -13,9 +16,9 @@ server.ready(() => {
       action,
       target,
     });
-    ctx.body = query;
+    ctx.body = 'done';
   });
-  const port = 3000;
+  const port = 80;
   app.listen(port, () => {
     console.log(`app is listening on ${port}`);
   });

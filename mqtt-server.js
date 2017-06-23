@@ -13,6 +13,9 @@ const pubsubSettings = {
   return_buffers: true
 };
 
+const redisClient = new Redis(pubsubSettings);
+const data = { };
+
 const moscaSettings = {
   port: 1883,
   backend: pubsubSettings
@@ -27,18 +30,19 @@ class Server extends Base {
       console.log('Mosca server is up and running');
       this.ready(true);
     });
-    server.on('clientConnected', function(client) {
+    server.on('clientConnected', (client) => {
       console.log('Client Connected:', client.id);
       clients.set(client.id, client);
     });
 
-    server.on('clientDisconnected', function(client) {
+    server.on('clientDisconnected', (client) => {
       console.log('Client Disconnected:', client.id);
       clients.delete(client.id);
     });
 
-    server.on('published', function(packet, client) {
-      console.log('Published', packet);
+    // fired when a message is received
+    server.on('published', (packet, client) => {
+      console.log('received', packet);
       console.log('Client', client);
       this.emit('published', packet, client);
     });
