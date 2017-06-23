@@ -2,6 +2,7 @@
 
 const mosca = require('mosca');
 const Redis = require('ioredis');
+const Base = require('sdk-base');
 
 const pubsubSettings = {
   type: 'redis',
@@ -17,21 +18,50 @@ const moscaSettings = {
   backend: pubsubSettings
 };
 
-const server = new mosca.Server(moscaSettings);
+class Server extends Base {
+  constructor(options) {
+    super(options);
+    const server = new mosca.Server(moscaSettings);
+    const clients = new Map();
+    server.on('ready', function ready() {
+      console.log('Mosca server is up and running');
+    });
+    server.on('clientConnected', function(client) {
+      console.log('Client Connected:', client.id);
+      clients.set(client.id, client);
+    });
 
-server.on('ready', function ready() {
-  console.log('Mosca server is up and running');
-});
+    server.on('clientDisconnected', function(client) {
+      console.log('Client Disconnected:', client.id);
+      clients.delete(client.id);
+    });
 
-server.on('published', function(packet, client) {
-  console.log('Published', packet);
-  console.log('Client', client);
-});
+    server.on('published', function(packet, client) {
+      console.log('Published', packet);
+      console.log('Client', client);
+      this.emit('published', packet, client);
+    });
 
-server.on('clientConnected', function(client) {
-  console.log('Client Connected:', client.id);
-});
+    this.server = server;
+    this.clients = clients;
+  }
 
-server.on('clientDisconnected', function(client) {
-  console.log('Client Disconnected:', client.id);
-});
+  publish(topic, payload, client) {
+    const message = {
+      topic: topic,
+      payload: JSON.stringify(payload)
+    }
+
+    const server = this.server;
+    if (client) {
+      this.server.publish(message, client);
+    } else {
+      const clients = this.clients;
+      for(let id of clients.keys()) {
+        this.server.publish(message, clients.get(id));
+      }
+    }
+  }
+}
+
+module.exports = Server;
