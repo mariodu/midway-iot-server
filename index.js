@@ -17,6 +17,6 @@ server.ready(() => {
   });
   const port = 3000;
   app.listen(port, () => {
-    consoel.log(`app is listening on ${port}`);
+    console.log(`app is listening on ${port}`);
   });
 });
