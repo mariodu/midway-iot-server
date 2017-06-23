@@ -25,6 +25,7 @@ class Server extends Base {
     const clients = new Map();
     server.on('ready', function ready() {
       console.log('Mosca server is up and running');
+      this.ready(true);
     });
     server.on('clientConnected', function(client) {
       console.log('Client Connected:', client.id);
