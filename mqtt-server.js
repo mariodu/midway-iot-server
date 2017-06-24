@@ -42,7 +42,6 @@ class Server extends Base {
     // fired when a message is received
     server.on('published', (packet, client) => {
       console.log('received', packet);
-      console.log('Client', client);
       this.emit('published', packet, client);
     });
 

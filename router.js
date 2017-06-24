@@ -17,8 +17,8 @@ router.get('/switch', function*() {
 
 router.get('/status', function*() {
   const metric = this.query.metric;
-  const data = yield this.app.getData(metric);
-  this.body = data;
+  const data = yield this.app.queryData(metric);
+  this.body = JSON.parse(data);
 });
 
 module.exports = router;
