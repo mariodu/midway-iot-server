@@ -13,6 +13,9 @@ server.ready(() => {
   app.use(function*(next){
     this.set('Access-Control-Allow-Methods', '*');
     this.set('Access-Control-Allow-Origin','*');
+    if (this.method === 'OPTIONS') {
+      this.status = 200;
+    }
     yield next;
   });
   app.use(router.routes());
