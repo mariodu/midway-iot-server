@@ -10,11 +10,12 @@ server.ready(() => {
   const app = new Koa();
   const redis = server.redisClient;
   app.server = server;
-  app.use(router.routes());
   app.use(function*(next){
     this.set('Access-Control-Allow-Origin','*');
     yield next;
   });
+  app.use(router.routes());
+
   app.queryData = function(metric) {
     return redis.get(metric);
   }
