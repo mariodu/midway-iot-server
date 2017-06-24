@@ -23,7 +23,7 @@
   "dependencies": {
     "ioredis": "^3.1.1",
     "koa": "^1.1.2",
-    "koa-jsonp": "^2.0.2",
+    "koa-jsonp": "^0.2.0",
     "koa-router": "^5.4.0",
     "mosca": "^2.5.1",
     "sdk-base": "^3.1.1"
