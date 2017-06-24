@@ -22,8 +22,8 @@
   "homepage": "https://github.com/mariodu/midway-iot-server#readme",
   "dependencies": {
     "ioredis": "^3.1.1",
-    "koa": "^2.3.0",
-    "koa-router": "^7.2.1",
+    "koa": "^1.1.2",
+    "koa-router": "^5.4.0",
     "mosca": "^2.5.1",
     "sdk-base": "^3.1.1"
   }

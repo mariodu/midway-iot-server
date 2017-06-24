@@ -2,23 +2,23 @@
 const Router = require('koa-router');
 const router = new Router();
 
-router.get('/switch', function (ctx, next) {
-  const app = ctx.app;
-  const query = ctx.query;
+router.get('/switch', function*() {
+  const app = this.app;
+  const query = this.query;
   const action = query.action;
   const target = query.target;
   app.server.publish('midway-iot', {
     action,
     target,
   });
-  ctx.body = 'done';
+  this.body = 'done';
 });
 
 
-router.get('/status', async (ctx) => {
-  const metric = ctx.query.metric;
-  const data = await ctx.app.getData(metric);
-  ctx.body = data;
+router.get('/status', function*() {
+  const metric = this.query.metric;
+  const data = yield this.app.getData(metric);
+  this.body = data;
 });
 
 module.exports = router;
