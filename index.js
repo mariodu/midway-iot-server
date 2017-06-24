@@ -11,7 +11,10 @@ server.ready(() => {
   const redis = server.redisClient;
   app.server = server;
   app.use(router.routes());
-  app.use(jsonp());
+  app.use(function*(next){
+    this.set('Access-Control-Allow-Origin','*');
+    yield next;
+  });
   app.queryData = function(metric) {
     return redis.get(metric);
   }
