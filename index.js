@@ -11,6 +11,7 @@ server.ready(() => {
   const redis = server.redisClient;
   app.server = server;
   app.use(function*(next){
+    this.set('Access-Control-Allow-Methods', '*');
     this.set('Access-Control-Allow-Origin','*');
     yield next;
   });
