@@ -4,12 +4,14 @@ const MqttServer = require('./mqtt-server');
 const server = new MqttServer();
 const router = require('./router');
 const data = {};
+const jsonp = require('koa-jsonp');
 
 server.ready(() => {
   const app = new Koa();
   const redis = server.redisClient;
   app.server = server;
   app.use(router.routes());
+  app.use(jsonp());
   app.queryData = function(metric) {
     return redis.get(metric);
   }
@@ -34,7 +36,7 @@ server.ready(() => {
         console.log(message.toString());
         console.error(err);
       }
-    }  
+    }
   });
 
   const port = 80;
