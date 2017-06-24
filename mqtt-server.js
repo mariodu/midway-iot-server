@@ -14,7 +14,6 @@ const pubsubSettings = {
 };
 
 const redisClient = new Redis(pubsubSettings);
-const data = { };
 
 const moscaSettings = {
   port: 1883,
@@ -49,6 +48,7 @@ class Server extends Base {
 
     this.server = server;
     this.clients = clients;
+    this.redisClient = redisClient;
   }
 
   publish(topic, payload, client) {
