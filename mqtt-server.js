@@ -8,7 +8,7 @@ const pubsubSettings = {
   type: 'redis',
   redis: Redis,
   port: 6379,
-  host: '127.0.0.1',
+  host: '116.62.164.26',
   password: 'midway_iot_server',
   return_buffers: true
 };
@@ -61,7 +61,7 @@ class Server extends Base {
       this.server.publish(message, client);
     } else {
       const clients = this.clients;
-      for(let id of clients.keys()) {
+      for (let id of clients.keys()) {
         this.server.publish(message, clients.get(id));
       }
     }
