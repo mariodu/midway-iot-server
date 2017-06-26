@@ -20,6 +20,7 @@ server.ready(() => {
     }
     yield next;
   });
+  app.use(require('koa-static')(__dirname + '/views/public'));
   app.use(handlebars({
     defaultLayout: "main"
   }));
