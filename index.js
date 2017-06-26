@@ -12,7 +12,7 @@ server.ready(() => {
   const app = new Koa();
   const redis = server.redisClient;
   app.server = server;
-  app.use(serve(__dirname, './public'));
+  app.use(serve(__dirname + '/public'));
   app.use(function*(next) {
     this.set('Access-Control-Allow-Methods', '*');
     this.set('Access-Control-Allow-Origin', '*');
