@@ -2,6 +2,10 @@
 const Router = require('koa-router');
 const router = new Router();
 
+router.get('/', function*() {
+  yield this.render('index');
+});
+
 router.get('/switch', function*() {
   const app = this.app;
   const query = this.query;
@@ -13,7 +17,6 @@ router.get('/switch', function*() {
   });
   this.body = 'done';
 });
-
 
 router.get('/status', function*() {
   const metric = this.query.metric;

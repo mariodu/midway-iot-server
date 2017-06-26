@@ -5,25 +5,30 @@ const server = new MqttServer();
 const router = require('./router');
 const data = {};
 const jsonp = require('koa-jsonp');
+const handlebars = require("koa-handlebars");
 
 server.ready(() => {
   const app = new Koa();
   const redis = server.redisClient;
   app.server = server;
-  app.use(function*(next){
+  app.use(function*(next) {
     this.set('Access-Control-Allow-Methods', '*');
-    this.set('Access-Control-Allow-Origin','*');
-    this.set('Access-Control-Allow-Headers','Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With')
+    this.set('Access-Control-Allow-Origin', '*');
+    this.set('Access-Control-Allow-Headers', 'Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With')
     if (this.method === 'OPTIONS') {
       this.status = 200;
     }
     yield next;
   });
+  app.use(handlebars({
+    defaultLayout: "main"
+  }));
   app.use(router.routes());
 
   app.queryData = function(metric) {
     return redis.get(metric);
   }
+
   server.on('published', (message, client) => {
     if (message.topic === 'sensor') {
       try {
