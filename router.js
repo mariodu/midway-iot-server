@@ -30,7 +30,11 @@ router.get('/switch', function*() {
 router.get('/status', function*() {
   const metric = this.query.metric;
   const data = yield this.app.queryData(metric);
-  this.body = JSON.parse(data);
+  if (typeof data === 'string') {
+    this.body = JSON.parse(data);
+  } else {
+    this.body = data;
+  }
 });
 
 module.exports = router;
