@@ -29,6 +29,9 @@ server.ready(() => {
   app.use(router.routes());
 
   app.queryData = function(metric) {
+    if (data[metric]) {
+      return Promise.resolve(data[metric]);
+    }
     return redis.get(metric);
   }
 
