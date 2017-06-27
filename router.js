@@ -11,11 +11,20 @@ router.get('/switch', function*() {
   const query = this.query;
   const action = query.action;
   const target = query.target;
+  const clients = app.server.clients;
+  if (!clients.size) {
+    return this.body = {
+      success: false,
+      error: 'no connected client'
+    };
+  }
   app.server.publish('midway-iot', {
     action,
     target,
   });
-  this.body = 'done';
+  this.body = {
+    success: true,
+  };
 });
 
 router.get('/status', function*() {
